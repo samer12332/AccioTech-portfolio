@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(77, 201, 255, 0.2), transparent 24%),
+    radial-gradient(circle at top right, rgba(245, 159, 11, 0.16), transparent 20%),
+    linear-gradient(180deg, #f8fbff 0%, #ffffff 26%, #f7fbff 100%);
+  color: #07142f;
+  font-family:
+    "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.section-shell {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+.section-copy {
+  @apply mx-auto max-w-2xl text-center;
+}
+
+.section-tag {
+  @apply inline-flex items-center gap-2 rounded-full border border-blue-200/70 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-cobalt shadow-sm backdrop-blur;
+}
+
+.section-title {
+  @apply mt-5 text-3xl font-semibold tracking-tight text-ink sm:text-4xl lg:text-5xl;
+}
+
+.section-description {
+  @apply mt-5 text-base leading-8 text-slate-600 sm:text-lg;
+}
+
+.glass-card {
+  @apply rounded-[28px] border border-white/70 bg-white/85 shadow-card backdrop-blur-xl;
+}
+
+.gold-ring {
+  position: relative;
+  overflow: hidden;
+}
+
+.gold-ring::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(245, 159, 11, 0.45), rgba(77, 201, 255, 0.18), rgba(25, 135, 255, 0.3));
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
