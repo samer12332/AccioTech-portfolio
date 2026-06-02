@@ -1,5 +1,6 @@
 import { Orbit, Sparkles, Target } from "lucide-react";
 
+import { MobileCarousel } from "@/components/mobile-carousel";
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
 
@@ -25,6 +26,27 @@ const pillars = [
 ] as const;
 
 export function AboutSection() {
+  const renderPillarCard = (index: number) => {
+    const pillar = pillars[index];
+    const Icon = pillar.icon;
+
+    return (
+      <article className="glass-card rounded-[28px] p-6">
+        <div className="flex items-start gap-4">
+          <div className="rounded-2xl bg-gradient-to-br from-cobalt to-cyan p-3 text-white shadow-glow">
+            <Icon className="h-5 w-5" />
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-ink">{pillar.title}</h3>
+            <p className="mt-2 text-sm leading-7 text-slate-600">
+              {pillar.description}
+            </p>
+          </div>
+        </div>
+      </article>
+    );
+  };
+
   return (
     <section id="about" className="py-20 sm:py-24">
       <div className="section-shell">
@@ -53,25 +75,19 @@ export function AboutSection() {
             </article>
           </Reveal>
 
-          <div className="grid gap-6">
+          <MobileCarousel ariaLabel="About AccioTech highlights carousel" className="grid gap-6">
             {pillars.map((pillar, index) => {
-              const Icon = pillar.icon;
+              return (
+                <div key={pillar.title}>{renderPillarCard(index)}</div>
+              );
+            })}
+          </MobileCarousel>
 
+          <div className="hidden gap-6 md:grid">
+            {pillars.map((pillar, index) => {
               return (
                 <Reveal key={pillar.title} delay={index * 0.08}>
-                  <article className="glass-card rounded-[28px] p-6">
-                    <div className="flex items-start gap-4">
-                      <div className="rounded-2xl bg-gradient-to-br from-cobalt to-cyan p-3 text-white shadow-glow">
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-ink">{pillar.title}</h3>
-                        <p className="mt-2 text-sm leading-7 text-slate-600">
-                          {pillar.description}
-                        </p>
-                      </div>
-                    </div>
-                  </article>
+                  {renderPillarCard(index)}
                 </Reveal>
               );
             })}

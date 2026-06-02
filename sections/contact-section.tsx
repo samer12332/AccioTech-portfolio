@@ -1,3 +1,6 @@
+"use client";
+
+import { FormEvent, useState } from "react";
 import { Mail, MapPin, MessageCircle, PhoneCall } from "lucide-react";
 
 import { Reveal } from "@/components/reveal";
@@ -19,6 +22,59 @@ const socials = [
 ] as const;
 
 export function ContactSection() {
+  const [submitState, setSubmitState] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+
+    if (!form.reportValidity()) {
+      return;
+    }
+
+    const formData = new FormData(form);
+    const payload = {
+      parentContactName: formData.get("parentContactName"),
+      studentAgeGroup: formData.get("studentAgeGroup"),
+      email: formData.get("email"),
+      programInterest: formData.get("programInterest"),
+      message: formData.get("message")
+    };
+
+    try {
+      setSubmitState("submitting");
+      setErrorMessage("");
+
+      const response = await fetch("/api/inquiries", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        const responseBody = (await response.json().catch(() => null)) as
+          | { error?: string }
+          | null;
+
+        throw new Error(responseBody?.error || "Unable to send your inquiry right now.");
+      }
+
+      setSubmitState("success");
+      form.reset();
+    } catch (error) {
+      setSubmitState("error");
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Unable to send your inquiry right now."
+      );
+    }
+  };
+
   return (
     <section id="contact" className="py-20 sm:py-24">
       <div className="section-shell">
@@ -101,31 +157,36 @@ export function ContactSection() {
               <form
                 className="grid gap-5"
                 aria-label="Contact form"
-                action="mailto:sameryousry99@gmail.com"
                 method="post"
-                encType="text/plain"
+                onSubmit={handleSubmit}
               >
                 <div className="grid gap-5 sm:grid-cols-2">
                   <label className="grid gap-2">
                     <span className="text-sm font-medium text-slate-700">Parent / Contact Name</span>
                     <input
-                      name="Parent / Contact Name"
+                      name="parentContactName"
                       type="text"
                       placeholder="Your name"
+                      autoComplete="name"
+                      required
                       className="h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none transition focus:border-cobalt focus:ring-4 focus:ring-blue-100"
                     />
                   </label>
                   <label className="grid gap-2">
                     <span className="text-sm font-medium text-slate-700">Student Age Group</span>
                     <select
-                      name="Student Age Group"
+                      name="studentAgeGroup"
+                      defaultValue=""
+                      required
                       className="h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none transition focus:border-cobalt focus:ring-4 focus:ring-blue-100"
                     >
-                      <option>Choose age group</option>
-                      <option>6 - 8</option>
-                      <option>9 - 12</option>
-                      <option>13 - 16</option>
-                      <option>17+</option>
+                      <option value="" disabled>
+                        Choose age group
+                      </option>
+                      <option value="6 - 8">6 - 8</option>
+                      <option value="9 - 12">9 - 12</option>
+                      <option value="13 - 16">13 - 16</option>
+                      <option value="17+">17+</option>
                     </select>
                   </label>
                 </div>
@@ -134,24 +195,31 @@ export function ContactSection() {
                   <label className="grid gap-2">
                     <span className="text-sm font-medium text-slate-700">Email</span>
                     <input
-                      name="Email"
+                      name="email"
                       type="email"
                       placeholder="name@example.com"
+                      autoComplete="email"
+                      inputMode="email"
+                      required
                       className="h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none transition focus:border-cobalt focus:ring-4 focus:ring-blue-100"
                     />
                   </label>
                   <label className="grid gap-2">
                     <span className="text-sm font-medium text-slate-700">Program Interest</span>
                     <select
-                      name="Program Interest"
+                      name="programInterest"
+                      defaultValue=""
+                      required
                       className="h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none transition focus:border-cobalt focus:ring-4 focus:ring-blue-100"
                     >
-                      <option>Select a program</option>
-                      <option>Programming courses</option>
-                      <option>Robotics courses</option>
-                      <option>STEM workshops</option>
-                      <option>Summer camps</option>
-                      <option>Robotics competitions</option>
+                      <option value="" disabled>
+                        Select a program
+                      </option>
+                      <option value="Programming courses">Programming courses</option>
+                      <option value="Robotics courses">Robotics courses</option>
+                      <option value="STEM workshops">STEM workshops</option>
+                      <option value="Summer camps">Summer camps</option>
+                      <option value="Robotics competitions">Robotics competitions</option>
                     </select>
                   </label>
                 </div>
@@ -159,18 +227,33 @@ export function ContactSection() {
                 <label className="grid gap-2">
                   <span className="text-sm font-medium text-slate-700">Message</span>
                   <textarea
-                    name="Message"
+                    name="message"
                     rows={6}
                     placeholder="Tell us what you are looking for"
+                    autoComplete="off"
+                    required
                     className="rounded-[24px] border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-cobalt focus:ring-4 focus:ring-blue-100"
                   />
                 </label>
 
+                {submitState === "success" ? (
+                  <p className="text-sm font-medium text-emerald-700">
+                    Thanks for your interest. Your inquiry has been sent successfully.
+                  </p>
+                ) : null}
+
+                {submitState === "error" ? (
+                  <p className="text-sm font-medium text-rose-600">
+                    {errorMessage}
+                  </p>
+                ) : null}
+
                 <button
                   type="submit"
+                  disabled={submitState === "submitting"}
                   className="inline-flex items-center justify-center rounded-full bg-ink px-6 py-3.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-navy"
                 >
-                  Send Inquiry
+                  {submitState === "submitting" ? "Sending..." : "Send Inquiry"}
                 </button>
               </form>
             </div>

@@ -18,3 +18,5 @@ dev-server-error.log
 
 .DS_Store
 Thumbs.db
+
+.vercel

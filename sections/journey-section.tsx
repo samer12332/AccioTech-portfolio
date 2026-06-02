@@ -1,9 +1,29 @@
 import { ArrowRight } from "lucide-react";
 
+import { MobileCarousel } from "@/components/mobile-carousel";
 import { Reveal } from "@/components/reveal";
 import { journeySteps } from "@/data/site";
 
 export function JourneySection() {
+  const renderJourneyCard = (index: number) => {
+    const step = journeySteps[index];
+
+    return (
+      <article className="rounded-[28px] border border-white/15 bg-white/10 p-6 backdrop-blur">
+        <div className="flex items-center justify-between">
+          <span className="text-sm font-semibold uppercase tracking-[0.3em] text-blue-100">
+            0{index + 1}
+          </span>
+          {index < journeySteps.length - 1 ? (
+            <ArrowRight className="hidden h-5 w-5 text-white/50 lg:block" />
+          ) : null}
+        </div>
+        <h3 className="mt-6 text-2xl font-semibold">{step.title}</h3>
+        <p className="mt-4 text-sm leading-7 text-blue-100">{step.description}</p>
+      </article>
+    );
+  };
+
   return (
     <section className="py-20 sm:py-24">
       <div className="section-shell">
@@ -22,21 +42,16 @@ export function JourneySection() {
             </p>
           </div>
 
-          <div className="mt-14 grid gap-6 lg:grid-cols-4">
+          <MobileCarousel ariaLabel="Learning journey carousel" className="mt-14">
+            {journeySteps.map((step, index) => (
+              <div key={step.title}>{renderJourneyCard(index)}</div>
+            ))}
+          </MobileCarousel>
+
+          <div className="mt-14 hidden gap-6 md:grid lg:grid-cols-4">
             {journeySteps.map((step, index) => (
               <Reveal key={step.title} delay={index * 0.08}>
-                <article className="rounded-[28px] border border-white/15 bg-white/10 p-6 backdrop-blur">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold uppercase tracking-[0.3em] text-blue-100">
-                      0{index + 1}
-                    </span>
-                    {index < journeySteps.length - 1 ? (
-                      <ArrowRight className="hidden h-5 w-5 text-white/50 lg:block" />
-                    ) : null}
-                  </div>
-                  <h3 className="mt-6 text-2xl font-semibold">{step.title}</h3>
-                  <p className="mt-4 text-sm leading-7 text-blue-100">{step.description}</p>
-                </article>
+                {renderJourneyCard(index)}
               </Reveal>
             ))}
           </div>

@@ -3,17 +3,69 @@
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 
 import { navigationLinks } from "@/data/site";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const [pendingHref, setPendingHref] = useState<string | null>(null);
+
+  const scrollToSection = (href: string) => {
+    if (typeof window === "undefined" || !href.startsWith("#")) {
+      return;
+    }
+
+    const target = document.querySelector<HTMLElement>(href);
+
+    if (!target) {
+      return;
+    }
+
+    const top = target.getBoundingClientRect().top + window.scrollY - 108;
+    window.scrollTo({ top: Math.max(top, 0), behavior: "smooth" });
+    window.history.replaceState(null, "", href);
+  };
+
+  useEffect(() => {
+    if (open || !pendingHref) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      scrollToSection(pendingHref);
+      setPendingHref(null);
+    }, 260);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [open, pendingHref]);
+
+  const handleNavClick = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (!href.startsWith("#")) {
+      setOpen(false);
+      return;
+    }
+
+    event.preventDefault();
+
+    if (open) {
+      setPendingHref(href);
+      setOpen(false);
+      return;
+    }
+
+    scrollToSection(href);
+  };
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/60 bg-white/75 backdrop-blur-xl">
       <div className="section-shell flex min-h-[84px] items-center justify-between gap-6">
-        <a href="#home" className="flex items-center gap-3" aria-label="AccioTech home">
+        <a
+          href="#home"
+          className="flex items-center gap-3"
+          aria-label="AccioTech home"
+          onClick={(event) => handleNavClick(event, "#home")}
+        >
           <div className="overflow-hidden rounded-2xl border border-blue-100 bg-white p-1 shadow-md">
             <Image src="/logo.png" alt="AccioTech logo" width={54} height={54} className="h-[54px] w-[54px] rounded-xl object-cover" />
           </div>
@@ -31,6 +83,7 @@ export function Navbar() {
               key={item.href}
               href={item.href}
               className="text-sm font-medium text-slate-600 transition hover:text-cobalt"
+              onClick={(event) => handleNavClick(event, item.href)}
             >
               {item.label}
             </a>
@@ -41,6 +94,7 @@ export function Navbar() {
           <a
             href="#contact"
             className="rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white shadow-glow transition hover:-translate-y-0.5 hover:bg-navy"
+            onClick={(event) => handleNavClick(event, "#contact")}
           >
             Join Now
           </a>
@@ -74,7 +128,7 @@ export function Navbar() {
                   key={item.href}
                   href={item.href}
                   className="rounded-2xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-mist hover:text-cobalt"
-                  onClick={() => setOpen(false)}
+                  onClick={(event) => handleNavClick(event, item.href)}
                 >
                   {item.label}
                 </a>
@@ -82,7 +136,7 @@ export function Navbar() {
               <a
                 href="#contact"
                 className="mt-2 rounded-2xl bg-ink px-4 py-3 text-center text-sm font-semibold text-white"
-                onClick={() => setOpen(false)}
+                onClick={(event) => handleNavClick(event, "#contact")}
               >
                 Join Now
               </a>
