@@ -65,9 +65,9 @@ export function FooterSection() {
             Contact
           </h3>
           <ul className="mt-5 space-y-3 text-sm text-blue-100">
-            <li>Egypt (Future Expansion Across GCC)</li>
-            <li>sameryousry99@gmail.com</li>
-            <li>+201017306593</li>
+            <li>Ahmed Maher, Sami El-Barbary Street, opposite 6 October Street (Triago), Mansoura, Egypt</li>
+            <li>aacciotech@gmail.com</li>
+            <li>+20 10 40637299</li>
             <li>WhatsApp available</li>
           </ul>
         </div>

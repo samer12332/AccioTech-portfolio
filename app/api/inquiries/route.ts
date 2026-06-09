@@ -13,10 +13,14 @@ type InquiryPayload = {
 
 export async function POST(request: Request) {
   try {
-    const recipientEmail = process.env.CONTACT_RECIPIENT_EMAIL?.trim();
+    const recipientEmail =
+      process.env.CONTACT_RECIPIENT_EMAIL?.trim() ||
+      process.env.SMTP_USER?.trim();
 
     if (!recipientEmail) {
-      throw new Error("Missing CONTACT_RECIPIENT_EMAIL environment variable.");
+      throw new Error(
+        "Missing CONTACT_RECIPIENT_EMAIL or SMTP_USER environment variable."
+      );
     }
 
     const body = (await request.json()) as InquiryPayload;

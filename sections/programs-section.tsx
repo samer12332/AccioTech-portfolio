@@ -12,13 +12,13 @@ export function ProgramsSection() {
 
         return (
             <article className="glass-card group h-full rounded-[30px] p-7 transition duration-300 hover:-translate-y-2 hover:shadow-glow">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-navy to-cobalt text-white shadow-lg">
+                <div className="flex h-14 w-14 items-center justify-center">
                     <Image
                         src={program.image}
                         alt={`${program.title} logo`}
                         width={56}
                         height={56}
-                        className="h-9 w-9 object-contain"
+                        className="h-12 w-12 object-contain"
                     />
                 </div>
                 <div className="mt-6 flex items-start justify-between gap-4">

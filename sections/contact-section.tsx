@@ -104,21 +104,31 @@ export function ContactSection() {
                   <MessageCircle className="mt-1 h-5 w-5 text-gold" />
                   <div>
                     <div className="font-semibold">WhatsApp</div>
-                    <div className="text-sm text-blue-100">+201017306593</div>
+                    <div className="text-sm text-blue-100">+20 10 40637299</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/10 p-4">
                   <Mail className="mt-1 h-5 w-5 text-gold" />
                   <div>
                     <div className="font-semibold">Email</div>
-                    <div className="text-sm text-blue-100">sameryousry99@gmail.com</div>
+                    <div className="text-sm text-blue-100">aacciotech@gmail.com</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/10 p-4">
                   <MapPin className="mt-1 h-5 w-5 text-gold" />
                   <div>
                     <div className="font-semibold">Location</div>
-                    <div className="text-sm text-blue-100">Egypt (Future Expansion Across GCC)</div>
+                    <div className="text-sm text-blue-100">
+                      Ahmed Maher, Sami El-Barbary Street, opposite 6 October Street (Triago), Mansoura, Egypt
+                    </div>
+                    <a
+                      href="https://maps.app.goo.gl/eCZEcWC8STosFWyc8?g_st=aw"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-2 inline-flex text-sm font-medium text-gold transition hover:text-white"
+                    >
+                      Open in Google Maps
+                    </a>
                   </div>
                 </div>
               </div>
@@ -143,7 +153,7 @@ export function ContactSection() {
               </div>
 
               <a
-                href="https://wa.me/201017306593"
+                href="https://wa.me/201040637299"
                 className="mt-10 inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-ink transition hover:-translate-y-0.5"
               >
                 <PhoneCall className="h-4 w-4" />

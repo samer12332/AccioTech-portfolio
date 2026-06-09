@@ -6,7 +6,6 @@ import { HeroSection } from "@/sections/hero-section";
 import { JourneySection } from "@/sections/journey-section";
 import { Navbar } from "@/sections/navbar";
 import { ProgramsSection } from "@/sections/programs-section";
-import { TestimonialsSection } from "@/sections/testimonials-section";
 import { WhySection } from "@/sections/why-section";
 
 export default function HomePage() {
@@ -20,7 +19,6 @@ export default function HomePage() {
         <WhySection />
         <JourneySection />
         <GallerySection />
-        <TestimonialsSection />
         <ContactSection />
       </main>
       <FooterSection />

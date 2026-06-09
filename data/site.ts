@@ -23,52 +23,59 @@ export const navigationLinks = [
 
 export const stats = [
   { value: "Egypt", label: "Launching first" },
-  { value: "6+", label: "Future-ready learning tracks" },
+  { value: "7+", label: "Future-ready learning tracks" },
   { value: "Regional", label: "Vision for future expansion" }
 ] as const;
 
 export const programs = [
   {
-    title: "Scratch & Creative Coding",
+    title: "Robotics",
     description:
-      "Playful coding journeys that teach logic, storytelling, and problem-solving through interactive projects.",
+      "Build and test robots while learning mechanics, sensors, logic, and hands-on teamwork.",
+    icon: Bot,
+    image: "/Programs Logos/robotics-transparent.png"
+  },
+  {
+    title: "Scratch Junior",
+    description:
+      "A playful first step into coding for younger learners through stories, games, and visual blocks.",
+    icon: Sparkles,
+    image: "/Programs Logos/scratchJr.png"
+  },
+  {
+    title: "Scratch",
+    description:
+      "Creative block-based programming that builds logic, sequencing, and interactive project skills.",
     icon: Sparkles,
     image: "/Programs Logos/scratch-transparent.png"
   },
   {
-    title: "Python for Kids & Teens",
+    title: "Pictoblox",
     description:
-      "A confident path into real programming with age-appropriate challenges, apps, and automation ideas.",
+      "Project-based coding with AI, robotics, and smart-device activities in a beginner-friendly environment.",
+    icon: Cpu,
+    image: "/Programs Logos/pictoblox.png"
+  },
+  {
+    title: "Python",
+    description:
+      "A confident path into real programming with beginner-friendly projects, problem solving, and automation ideas.",
     icon: Code2,
     image: "/Programs Logos/python-transparent.png"
   },
   {
-    title: "Robotics Foundations",
+    title: "Web",
     description:
-      "Build, test, and refine robotics systems while learning mechanics, sensors, and teamwork.",
-    icon: Bot,
-    image: "/Programs Logos/robotics.jpg"
-  },
-  {
-    title: "Arduino & Electronics",
-    description:
-      "Hands-on electronics labs that connect coding with circuits, sensors, and smart-device prototypes.",
-    icon: Cpu,
-    image: "/Programs Logos/arduino.jpg"
-  },
-  {
-    title: "Web Development",
-    description:
-      "Design and launch modern websites while discovering how great digital products are structured and built.",
+      "Design and build modern websites while learning how digital products are structured and launched.",
     icon: Globe,
-    image: "/Programs Logos/web.jpg"
+    image: "/Programs Logos/web-transparent.png"
   },
   {
-    title: "AI Basics for Young Innovators",
+    title: "AI",
     description:
-      "Explore machine learning concepts, ethical AI thinking, and beginner-friendly intelligent projects.",
+      "Explore artificial intelligence through simple concepts, practical tools, and age-appropriate projects.",
     icon: BrainCircuit,
-    image: "/Programs Logos/AI.jpg"
+    image: "/Programs Logos/AI-transparent.png"
   }
 ] as const;
 
